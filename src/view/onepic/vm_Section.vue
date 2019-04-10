@@ -19,7 +19,10 @@
         </li>
         <li class="item">
           <div class="title">环比上月增长</div>
-          <div class="subtitle num fg-green">{{momIncrease}}<small>%</small></div>
+          <div class="subtitle num fg-green">
+            {{momIncrease}}
+            <small>%</small>
+          </div>
         </li>
         <li class="item">
           <div class="title">上升明显区域</div>
@@ -35,13 +38,25 @@
             <div class="form-item">
               <div class="label">开始时间</div>
               <div class="field">
-                <input type="date" class="datepicker" v-model="startTime" :max="timeLimit">
+                <input
+                  type="date"
+                  class="datepicker"
+                  v-model="startTime"
+                  :max="timeLimit"
+                  :min="timeMin"
+                >
               </div>
             </div>
             <div class="form-item">
               <div class="label">结束时间</div>
               <div class="field">
-                <input type="date" class="datepicker" v-model="endTime" :max="timeLimit">
+                <input
+                  type="date"
+                  class="datepicker"
+                  v-model="endTime"
+                  :max="timeLimit"
+                  :min="timeMin"
+                >
               </div>
             </div>
           </div>
@@ -56,7 +71,7 @@
         </div>
       </div>
       <x-loading :show="showLoading"></x-loading>
-      <dl-District ref="dialog" :show="showModal" :take="keyModal"></dl-District>
+      <dl-District ref="dialog" :show="showModal" :take="keyModal" :date="dateData"></dl-District>
     </div>
   </div>
 </template>
@@ -72,6 +87,10 @@ export default {
     return {
       startTime: this.oneMonthAgo(),
       endTime: this.today(),
+      dateData: {
+        startTime: this.oneMonthAgo(),
+        endTime: this.today()
+      },
       showSetting: false,
       showLoading: false,
       highDisasterDistrict: "",
@@ -86,7 +105,8 @@ export default {
       chartData: null,
       autoflip: false,
       ticketfn: null,
-      timeLimit: this.today()
+      timeLimit: this.today(),
+      timeMin: this.dateShift(-365)
     };
   },
   props: {
@@ -97,9 +117,9 @@ export default {
     "x-pager": Pager,
     "dl-District": dlDistrict
   },
-  computed:{
-    hintText(){
-      return `显示数据自${this.startTime}起，截止至${this.endTime}`
+  computed: {
+    hintText() {
+      return `显示数据自${this.startTime}起，截止至${this.endTime}`;
     }
   },
   mounted() {
@@ -219,7 +239,7 @@ export default {
                   normal: {
                     show: true,
                     position: "outside",
-                    formatter:'{c}起'
+                    formatter: "{c}起"
                   }
                 }
               }
@@ -232,6 +252,10 @@ export default {
             let districtName = e.name;
             if (districtName !== "") {
               vm.keyModal = districtName;
+              vm.date = {
+                startTime:this.startTime,
+                endTime:this.endTime
+              }
               vm.$refs.dialog.query(districtName);
             }
           });

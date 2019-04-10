@@ -1,6 +1,6 @@
 <template>
   <div class="box" id="vm2">
-    <div class="box-header">
+    <div class="box-header" :title="hintText">
       <span class="title pos-left">{{title}}</span>
       <ul class="tools pos-right">
         <li class="item">
@@ -14,7 +14,7 @@
       <div class="chart" id="chart-2"></div>
       <ul class="towerlist" v-cloak>
         <li class="item">
-          <div class="title">高频灾情类型</div>
+          <div class="title">高频警情类型</div>
           <div class="subtitle fg-white">{{highFrequencyPlace}}</div>
         </li>
         <li class="item">
@@ -35,13 +35,13 @@
             <div class="form-item">
               <div class="label">开始时间</div>
               <div class="field">
-                <input type="date" class="datepicker" v-model="startTime" :max="timeLimit">
+                <input type="date" class="datepicker" v-model="startTime" :max="timeLimit" :min="timeMin">
               </div>
             </div>
             <div class="form-item">
               <div class="label">结束时间</div>
               <div class="field">
-                <input type="date" class="datepicker" v-model="endTime" :max="timeLimit">
+                <input type="date" class="datepicker" v-model="endTime" :max="timeLimit" :min="timeMin">
               </div>
             </div>
           </div>
@@ -65,7 +65,7 @@ import axios from "axios";
 import echarts from "echarts";
 import Loading from "@/components/Loading";
 import Pager from "@/components/Pager";
-import dlClass from "@/view/onepic/dl_Class";
+import dlClass from "@/view/onepic/dl_Category";
 
 export default {
   data() {
@@ -84,11 +84,17 @@ export default {
       keyModal: null,
       autoflip: false,
       ticketFn: null,
-      timeLimit: this.today()
+      timeLimit: this.today(),
+      timeMin:this.dateShift(-365)
     };
   },
   props: {
     title: String
+  },
+  computed:{
+    hintText(){
+      return `显示数据自${this.startTime}起，截止至${this.endTime}`
+    }
   },
   components: {
     "x-loading": Loading,

@@ -1,5 +1,5 @@
 <template>
-  <div class="mask" id="dialog-vm2" v-if="showDialog">
+  <div class="mask" id="dialog-vm2" v-show="showDialog">
     <div class="dialog">
       <div class="dialog-header">
         <div class="title pos-left">{{take}}-{{dialogTitle}}</div>
@@ -26,6 +26,7 @@
             class="datepicker" 
             v-model="startTime"
             :max="timeLimit" 
+            :min="timeMin"
             placeholder="开始时间">
           </li>
           <li class="item">至</li>
@@ -36,6 +37,7 @@
             class="datepicker" 
             v-model="endTime" 
             :max="timeLimit"
+            :min="timeMin"
             placeholder="结束时间">
           </li>
           <li class="item">
@@ -115,9 +117,10 @@ export default {
       district: this.take,
       showDialog: false,
       dialogTitle:'灾情记录清单',
-      startTime: this.oneMonthAgo(),
-      endTime: this.today(),
-      timeLimit:this.today()
+      startTime: '',
+      endTime: '',
+      timeLimit:this.today(),
+      timeMin:this.dateShift(-365)
     };
   },
   components: {
@@ -155,6 +158,8 @@ export default {
     },
     query(val) {
       this.district = val?val:this.district;
+      this.startTime=this.$parent.startTime
+      this.endTime=this.$parent.endTime
       this.showDialog = true;
       this.list = [];
       this.pageHandler(1);
@@ -165,8 +170,6 @@ export default {
       this.page = 0;
       this.pageSize = 10;
       this.total = 10;
-      this.startTime = this.oneMonthAgo();
-      this.endTime = this.today();
     },
     closeDialog() {
       this.showDialog = false;

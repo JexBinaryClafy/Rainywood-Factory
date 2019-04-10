@@ -18,7 +18,7 @@
 
 import vm_Accept from '@/view/onepic/vm_Accept'
 import vm_Class from '@/view/onepic/vm_Class'
-import vm_District from '@/view/onepic/vm_District'
+import vm_District from '@/view/onepic/vm_Section'
 import vm_Equipment from '@/view/onepic/vm_Equipment'
 import vm_Merge from '@/view/onepic/vm_Merge'
 import vm_Season from '@/view/onepic/vm_Season'

@@ -39,7 +39,7 @@
             >
           </li>
           <li class="item">
-            <input type="text" class="textbox" v-model="keyword" placeholder="请输入关键字搜索">
+            <input type="text" class="textbox" v-model="keyword" placeholder="请以警情位置为关键字搜索">
           </li>
           <li class="item">
             <button class="btn bg-blue" type="button" @click="query()">
@@ -51,8 +51,8 @@
           <thead>
             <tr>
               <td>序号</td>
-              <td>灾情位置</td>
-              <td>灾情类型</td>
+              <td>警情位置</td>
+              <td>警情类型</td>
               <td>接警时间</td>
               <td>出警中队</td>
             </tr>
@@ -96,7 +96,7 @@ export default {
   data() {
     return {
       showDialog: false,
-      dialogTitle: "贵阳市整体灾情记录",
+      dialogTitle: "贵阳市整体警情记录",
       disasterType: "",
       disasterTypeArray: ["火灾扑救", "抢险救援", "社会救助", "其他出动"],
       startTime: this.oneMonthAgo(),

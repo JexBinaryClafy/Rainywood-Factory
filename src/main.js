@@ -48,7 +48,6 @@ Vue.prototype.oneMonthAgo = function () {
 }
 
 
-
 Vue.prototype.today = function () {
   let now = new Date()
   let obj = {

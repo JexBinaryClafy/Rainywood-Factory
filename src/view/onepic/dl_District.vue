@@ -27,6 +27,7 @@
               v-model="startTime"
               placeholder="开始时间"
               :max="timeLimit"
+              :min="timeMin"
             >
           </li>
           <li class="item">至</li>
@@ -38,6 +39,7 @@
               v-model="endTime"
               placeholder="结束时间"
               :max="timeLimit"
+              :min="timeMin"
             >
           </li>
           <li class="item">
@@ -109,9 +111,10 @@ export default {
       district: this.take,
       showDialog: false,
       dialogTitle: "警情记录清单",
-      startTime: this.oneMonthAgo(),
-      endTime: this.today(),
+      startTime: this.$parent.startTime,
+      endTime: this.$parent.endTime,
       timeLimit: this.today(),
+      timeMin:this.dateShift(-365),
       showLoading: false
     };
   },
@@ -121,7 +124,8 @@ export default {
   },
   props: {
     take: String,
-    show: Boolean
+    show: Boolean,
+    date: Object
   },
   methods: {
     pageHandler(page) {
@@ -160,8 +164,8 @@ export default {
       this.page = 0;
       this.pageSize = 10;
       this.total = 10;
-      this.startTime = this.oneMonthAgo();
-      this.endTime = this.today();
+      this.startTime = this.$parent.startTime;
+      this.endTime = this.$parent.endTime;
     },
     closeDialog() {
       this.showDialog = false;
