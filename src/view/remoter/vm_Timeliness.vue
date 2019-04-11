@@ -1,6 +1,6 @@
 <template>
   <div class="box">
-    <div class="box-header">
+    <div class="box-header" :title="hintText">
       <span class="title pos-left">{{title}}</span>
       <ul class="tools pos-right">
         <li class="item">
@@ -14,16 +14,16 @@
       <div class="chart" id="chart-remoter-4"></div>
       <ul class="towerlist">
         <li class="item">
-          <div class="title">隐患高峰时间</div>
-          <div class="subtitle num fg-white">{{peakDate}}</div>
+          <div class="title">隐患告警高峰时间</div>
+          <div class="subtitle num fg-red" style="font-size:22px;">{{peakDate}}</div>
         </li>
         <li class="item">
-          <div class="title">当日火灾接警</div>
-          <div class="subtitle num fg-red">{{disasterThatDay}}</div>
+          <div class="title">隐患高峰火灾接警（次）</div>
+          <div class="subtitle num fg-orange">{{disasterThatDay}}</div>
         </li>
         <li class="item">
           <div class="title">隐患爆发地区</div>
-          <div class="subtitle fg-white">{{peakDistrict}}</div>
+          <div class="subtitle fg-cyan">{{peakDistrict}}</div>
         </li>
       </ul>
       <div class="chartSetting" v-show="showSetting">
@@ -35,13 +35,13 @@
             <div class="form-item">
               <div class="label">开始时间</div>
               <div class="field">
-                <input type="date" class="datepicker" :max="timeLimit" v-model="startTime">
+                <input type="date" class="datepicker" :max="timeLimit" :min="timeMin" v-model="startTime">
               </div>
             </div>
             <div class="form-item">
               <div class="label">结束时间</div>
               <div class="field">
-                <input type="date" class="datepicker" :max="timeLimit" v-model="endTime">
+                <input type="date" class="datepicker" :max="timeLimit" :min="timeMin" v-model="endTime">
               </div>
             </div>
           </div>
@@ -69,9 +69,10 @@ import dlTimeliness from "@/view/remoter/dl_Timeliness";
 export default {
   data() {
     return {
-      startTime: this.oneMonthAgo(),
+      startTime: this.dateShift(-7),
       endTime: this.today(),
-      timeLimit: this.today(),
+      timeLimit: this.dateShift(0),
+      timeMin:this.dateShift(-365),
       showSetting: false,
       showLoading: false,
       peakDate: "暂无",
@@ -85,6 +86,11 @@ export default {
   },
   props: {
     title: String
+  },
+  computed:{
+    hintText(){
+      return `显示数据自${this.startTime}起，截止至${this.endTime}`
+    }
   },
   components: {
     "x-loading": Loading,

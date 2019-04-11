@@ -27,6 +27,7 @@
               v-model="startTime"
               placeholder="开始时间"
               :max="timeLimit"
+              :min="timeMin"
             >
           </li>
           <li class="item">至</li>
@@ -38,10 +39,11 @@
               v-model="endTime"
               placeholder="结束时间"
               :max="timeLimit"
+              :min="timeMin"
             >
           </li>
           <li class="item">
-            <input type="text" class="textbox" v-model="keyword" placeholder="请输入关键字搜索">
+            <input type="text" class="textbox" v-model="keyword" placeholder="请以告警发生部位为关键字搜索">
           </li>
           <li class="item">
             <button class="btn bg-blue" type="button" @click="query()">
@@ -53,10 +55,10 @@
           <thead>
             <tr>
               <td>序号</td>
-              <td>隐患内容</td>
+              <td>告警内容</td>
               <td>隐患类型</td>
-              <td>隐患发生部位</td>
-              <td>隐患发现时间</td>
+              <td>发生部位</td>
+              <td>告警时间</td>
             </tr>
           </thead>
           <tbody v-if="list.length>0">
@@ -121,20 +123,16 @@ export default {
       maxPage: 9,
       district: this.take,
       showDialog: false,
-      dialogTitle: "安全隐患清单",
+      dialogTitle: "安全隐患告警日志",
       startTime: this.oneMonthAgo(),
       endTime: this.today(),
-      timeLimit:this.today()
+      timeLimit:this.today(),
+      timeMin:this.dateShift(-365)
     };
   },
   components: {
     "x-pager": Pager,
     "x-loading": Loading
-  },
-  watch:{
-    take(n,o){
-      debugger;
-    }
   },
   props: {
     take: String,
@@ -152,7 +150,6 @@ export default {
         startTime:this.startTime+' 00:00:00',
         endTime:this.endTime+' 23:59:59'
       };
-      debugger
       this.showLoading=true
       axios.get(this.URLHEAD+'getMonitorDetailed',{
           params:params
@@ -165,6 +162,8 @@ export default {
     },
     query(val) {
       this.district = val?val:this.district
+      this.startTime=this.$parent.startTime
+      this.endTime=this.$parent.endTime
       this.showDialog=true
       this.list=[]
       this.pageHandler(1);

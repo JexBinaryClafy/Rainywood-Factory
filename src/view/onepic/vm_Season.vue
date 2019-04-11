@@ -1,11 +1,10 @@
 <template>
   <div class="box">
-    <div class="box-header">
+    <div class="box-header" :title="hintText">
       <span class="title pos-left">{{title}}</span>
     </div>
     <div class="box-body">
       <div class="chart fullsize" id="chart-5"></div>
-
       <x-loading :show="showLoading"></x-loading>
     </div>
     <dl-Season ref="dialog" :show="showModal" :take="keyModal"></dl-Season>
@@ -24,8 +23,8 @@ export default {
       showSetting: false,
       showLoading: false,
       params: null,
-      startTime: "2018-01-01 00:00:00",
-      endTime: "2018-12-31 23:59:59",
+      startTime: "2018-01-01",
+      endTime: "2018-12-31",
       chartInstance: null,
       option: null,
       showModal: false,
@@ -37,6 +36,11 @@ export default {
   props: {
     title: String
   },
+  computed: {
+    hintText(){
+      return `显示数据自${this.startTime}起，截止至${this.endTime}`
+    }
+  },
   components: {
     "x-loading": Loading,
     "x-pager": Pager,
@@ -47,8 +51,8 @@ export default {
       let $this = this;
       let params = {
         HTTEST: "test",
-        startTime:this.startTime,
-        endTime:this.endTime
+        startTime:this.startTime + ' 00:00:00',
+        endTime:this.endTime+' 23:59:59'
       };
       this.showLoading=true
       axios.get(this.URLHEAD+'YZT_XFJJXFX',{
@@ -97,7 +101,7 @@ export default {
             yAxis: [
               {
                 type: "value",
-                name: "灾情数量（个）",
+                name: "灾情数量（起）",
                 axisTick: {
                   show: false
                 },

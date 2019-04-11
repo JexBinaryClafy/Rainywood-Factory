@@ -20,11 +20,11 @@
             </select>
           </li>
           <li class="item">
-            <input type="date" class="datepicker" v-model="startTime" max="timeLimit">
+            <input type="date" class="datepicker" v-model="startTime" max="timeLimit" :min="timeMin">
           </li>
           <li class="item">至</li>
           <li class="item">
-            <input type="date" class="datepicker" v-model="endTime" max="timeLimit">
+            <input type="date" class="datepicker" v-model="endTime" max="timeLimit" :min="timeMin">
           </li>
           <li class="item">
             <input type="text" class="textbox" v-model="keyword" placeholder="请输入关键字搜索">
@@ -86,6 +86,7 @@ export default {
       startTime: this.oneMonthAgo(),
       endTime: this.today(),
       timeLimit: this.today(),
+      timeMin:this.dateShift(-365),
       keyword: null,
       list: [],
       listHasData: false,
@@ -134,6 +135,8 @@ export default {
     },
     query(val) {
       this.teamName = val?val:this.teamName;
+      this.startTime=this.$parent.startTime
+      this.endTime=this.$parent.endTime
       this.showDialog = true;
       this.list = [];
       this.pageHandler(1);

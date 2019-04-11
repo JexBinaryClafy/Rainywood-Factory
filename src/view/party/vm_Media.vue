@@ -17,7 +17,7 @@
           </div>
         </li>
       </ul>
-      <ul class="beltlist pos-right" style="width:518px;">
+      <ul class="beltlist pos-right" style="width:635px;">
         <li class="item1" v-for="(item,idx) in listNews" :key="idx">
           <div style="float:left;padding-left:10px;color:#f09400;padding-top:20px">
             <div class>浏览次数</div>

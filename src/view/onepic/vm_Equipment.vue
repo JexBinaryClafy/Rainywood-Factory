@@ -9,14 +9,14 @@
         <li class="item">
           <div class="title">易损易耗装备</div>
           <div
-            class="subtitle fg-white"
+            class="subtitle fg-red"
             :title="weakEquipmentType"
             style="font-size:18px;text-overflow:ellipsis;overflow:hidden;white-space:nowrap;"
           >{{weakEquipmentType}}</div>
         </li>
         <li class="item">
-          <div class="title">报修报损数量</div>
-          <div class="subtitle num fg-orange">{{damagedRateIncrease}}</div>
+          <div class="title">报修报损数量（件）</div>
+          <div class="subtitle num fg-orange">{{damagedRateIncrease}}<small></small></div>
         </li>
         <li class="item">
           <div class="title">高耐用性装备</div>
@@ -176,7 +176,7 @@ export default {
                   fontWeight: "normal",
                   fontSize: "12"
                 },
-                formatter: "{value}"
+                formatter: "{value}件"
               }
             },
             series: [
@@ -304,7 +304,7 @@ export default {
                   fontWeight: "normal",
                   fontSize: "12"
                 },
-                formatter: "{value}"
+                formatter: "{value}件"
               }
             },
             series: [

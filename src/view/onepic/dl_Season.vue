@@ -27,7 +27,7 @@
           </li>
 
           <li class="item">
-            <input type="text" class="textbox" v-model="keyword" placeholder="请输入关键字搜索">
+            <input type="text" class="textbox" v-model="keyword" placeholder="请以警情位置作为关键字搜索">
           </li>
           <li class="item">
             <button class="btn bg-blue" type="button" @click="query()">
@@ -39,8 +39,8 @@
           <thead>
             <tr>
               <td>序号</td>
-              <td>灾情位置</td>
-              <td>灾情类型</td>
+              <td>警情位置</td>
+              <td>警情类型</td>
               <td>所属区划</td>
               <td>接警时间</td>
               <td>出警中队</td>
@@ -111,7 +111,7 @@ export default {
       total: 10,
       maxPage: 10,
       showDialog: false,
-      dialogTitle: "灾情记录清单",
+      dialogTitle: "警情记录清单",
       date: null,
       showLoading: false
     };
@@ -150,6 +150,7 @@ export default {
     },
     query(val) {
       this.date = val?val:this.date;
+      
       this.showDialog = true;
       this.list = [];
       this.pageHandler(1);

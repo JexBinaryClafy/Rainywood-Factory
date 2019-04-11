@@ -1,6 +1,6 @@
 <template>
   <div class="box" id="vm5">
-    <div class="box-header">
+    <div class="box-header" :title="hintText">
       <span class="title pos-left">{{title}}</span>
       <ul class="tools pos-right">
         <li class="item">
@@ -15,15 +15,15 @@
       <ul class="towerlist">
         <li class="item">
           <div class="title">巡查率最低</div>
-          <div class="subtitle num fg-white">{{lowestCheckRate}}</div>
+          <div class="subtitle num fg-red" style="font-size:22px;">{{lowestCheckRate}}</div>
         </li>
         <li class="item">
-          <div class="title">当天产生隐患</div>
-          <div class="subtitle num fg-orange">{{dangerThatDay}}</div>
+          <div class="title">巡查率最低当日告警</div>
+          <div class="subtitle num fg-orange">{{dangerThatDay}}次</div>
         </li>
         <li class="item">
-          <div class="title">当天火灾接警</div>
-          <div class="subtitle num fg-green">{{disasterThatDay}}</div>
+          <div class="title">巡查率最低当日接警</div>
+          <div class="subtitle num fg-cyan">{{disasterThatDay}}次</div>
         </li>
       </ul>
       <div class="chartSetting" v-show="showSetting">
@@ -35,13 +35,13 @@
             <div class="form-item">
               <div class="label">开始时间</div>
               <div class="field">
-                <input type="date" class="datepicker" :max="timeLimit" v-model="startTime">
+                <input type="date" class="datepicker" :max="timeLimit" :min="timeMin" v-model="startTime">
               </div>
             </div>
             <div class="form-item">
               <div class="label">结束时间</div>
               <div class="field">
-                <input type="date" class="datepicker" :max="timeLimit" v-model="endTime">
+                <input type="date" class="datepicker" :max="timeLimit" :min="timeMin" v-model="endTime">
               </div>
             </div>
           </div>
@@ -72,9 +72,10 @@ import dlProblems from '@/view/remoter/dl_Problems'
 export default {
   data() {
     return {
-      startTime: this.oneMonthAgo(),
+      startTime: this.dateShift(-7),
       endTime: this.today(),
-      timeLimit: this.today(),
+      timeLimit: this.dateShift(0),
+      timeMin:this.dateShift(-365),
       showSetting: false,
       showLoading: false,
       lowestCheckRate: "暂无",
@@ -90,6 +91,11 @@ export default {
   },
   props: {
     title: String
+  },
+  computed:{
+    hintText(){
+      return `显示数据自${this.startTime}起，截止至${this.endTime}`
+    }
   },
   components: {
     "x-loading": Loading,
@@ -181,7 +187,8 @@ export default {
                   textStyle: {
                     fontSize: 14,
                     color: "rgba(255,255,255,0.3)"
-                  }
+                  },
+                  formatter:'{value}次'
                 },
                 splitLine: {
                   lineStyle: {
@@ -191,7 +198,7 @@ export default {
               },
               {
                 type: "value",
-                name: "火灾隐患",
+                name: "隐患告警",
                 axisTick: {
                   show: false
                 },
@@ -205,7 +212,8 @@ export default {
                   textStyle: {
                     fontSize: 14,
                     color: "rgba(255,255,255,0.3)"
-                  }
+                  },
+                  formatter:'{value}次'
                 },
                 splitLine: {
                   lineStyle: {
@@ -216,7 +224,7 @@ export default {
             ],
             series: [
               {
-                name: "巡检次数",
+                name: "巡查次数",
                 type: "line",
                 smooth: true,
                 symbol: "circle",
@@ -325,7 +333,7 @@ export default {
             console.log(e);
             let selectTime = e.name;
             switch(e.seriesName){
-              case '巡检次数':
+              case '巡查次数':
               $this.keyModal=selectTime
               $this.$refs.dialog.query(selectTime)
               break;

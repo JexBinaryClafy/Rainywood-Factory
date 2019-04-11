@@ -1,5 +1,5 @@
 <template>
-  <div class="mask" id="dialog-vm4" v-show="showDialog">
+  <div class="mask" v-show="showDialog">
     <div class="dialog" style="width:1600px;">
       <div class="dialog-header">
         <div class="title pos-left">{{take}} - {{dialogTitle}}</div>
@@ -26,7 +26,7 @@
             </select>
           </li>
           <li class="item">
-            <input type="text" class="textbox" v-model="keyword" placeholder="请输入关键字搜索">
+            <input type="text" class="textbox" v-model="keyword" placeholder="请以发生部位作为关键字搜索">
           </li>
           <li class="item">
             <button class="btn bg-blue" type="button" @click="query()">

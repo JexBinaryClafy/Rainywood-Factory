@@ -15,7 +15,7 @@
       <ul class="towerlist" v-cloak>
         <li class="item">
           <div class="title">高灾情地区</div>
-          <div class="subtitle fg-white">{{highDisasterDistrict}}</div>
+          <div class="subtitle fg-red">{{highDisasterDistrict}}</div>
         </li>
         <li class="item">
           <div class="title">环比上月增长</div>

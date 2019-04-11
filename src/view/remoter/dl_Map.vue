@@ -326,7 +326,8 @@ export default {
       this.comId = val?val.id:this.comId
       this.comName=val?val.comName:this.comName
       let params = {
-        country: this.comName
+        country: this.comName,
+        indexDate:this.$parent.date
       };
       this.showDialog = true;
       this.listDY = [];
@@ -352,7 +353,8 @@ export default {
     },
     getWeatherData() {
       let params = {
-        countyName: this.basicData.SSQH
+        countyName: this.basicData.SSQH,
+        indexDate:this.$parent.date
       };
       this.loadingWeather = true;
       axios
@@ -367,7 +369,8 @@ export default {
     getDYAlarms() {
       let params = {
         mc: this.basicData.MC,
-        type: "电压告警"
+        type: "电压告警",
+        indexDate:this.$parent.date
       };
       this.loadingDY = true;
       axios
@@ -388,7 +391,8 @@ export default {
     getDLAlarms() {
       let params = {
         mc: this.basicData.MC,
-        type: "电流告警"
+        type: "电流告警",
+        indexDate:this.$parent.date
       };
       this.loadingDL = true;
       axios
@@ -409,7 +413,8 @@ export default {
     getYSAlarms() {
       let params = {
         mc: this.basicData.MC,
-        type: "用水告警"
+        type: "用水告警",
+        indexDate:this.$parent.date
       };
       this.loadingYS = true;
       axios
@@ -430,7 +435,8 @@ export default {
     getYHAlarms() {
       let params = {
         mc: this.basicData.MC,
-        type: "隐患巡查"
+        type: "隐患巡查",
+        indexDate:this.$parent.date
       };
       this.loadingYH = true;
       axios

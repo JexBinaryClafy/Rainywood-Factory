@@ -25,6 +25,7 @@
               class="datepicker"
               v-model="startTime"
               :max="timeLimit"
+              :min="timeMin"
               placeholder="开始时间"
             >
           </li>
@@ -35,6 +36,7 @@
               class="datepicker"
               v-model="endTime"
               :max="timeLimit"
+              :min="timeMin"
               placeholder="结束时间"
             >
           </li>
@@ -102,6 +104,7 @@ export default {
       startTime: this.oneMonthAgo(),
       endTime: this.today(),
       timeLimit: this.today(),
+      timeMin:this.dateShift(-365),
       keyword: null,
       list: [],
       listHasData: false,
@@ -146,6 +149,8 @@ export default {
     },
     query(val) {
       this.timeScope = val?val:this.timeScope;
+      this.startTime=this.$parent.startTime
+      this.endTime=this.$parent.endTime
       this.showDialog = true;
       this.list = [];
       this.pageHandler(1);

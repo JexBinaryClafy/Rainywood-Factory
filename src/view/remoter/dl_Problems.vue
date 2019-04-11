@@ -26,7 +26,7 @@
             </select>
           </li>
           <li class="item">
-            <input type="text" class="textbox" v-model="keyword" placeholder="请输入关键字搜索">
+            <input type="text" class="textbox" v-model="keyword" placeholder="请以发生部位作为关键字搜索">
           </li>
           <li class="item">
             <button class="btn bg-blue" type="button" @click="query()">

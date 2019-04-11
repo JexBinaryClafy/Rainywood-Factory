@@ -1,6 +1,6 @@
 <template>
   <div class="box">
-    <div class="box-header">
+    <div class="box-header" :title="hintText">
       <span class="title pos-left">{{title}}</span>
       <ul class="tools pos-right">
         <li class="item">
@@ -21,13 +21,13 @@
             <div class="form-item">
               <div class="label">开始时间</div>
               <div class="field">
-                <input type="date" class="datepicker" v-model="startTime">
+                <input type="date" class="datepicker" v-model="startTime" :max="timeLimit" :min="timeMin">
               </div>
             </div>
             <div class="form-item">
               <div class="label">结束时间</div>
               <div class="field">
-                <input type="date" class="datepicker" v-model="endTime">
+                <input type="date" class="datepicker" v-model="endTime" :max="timeLimit" :min="timeMin">
               </div>
             </div>
           </div>
@@ -67,7 +67,8 @@ export default {
       chartData: null,
       autoflip: false,
       ticketfn: null,
-      timeLimit: this.today()
+      timeLimit: this.today(),
+      timeMin:this.dateShift(-365)
     };
   },
   props: {
@@ -79,6 +80,11 @@ export default {
   },
   mounted() {
     this.renderChart();
+  },
+  computed:{
+    hintText(){
+      return `显示数据自${this.startTime}起，截止至${this.endTime}`
+    }
   },
   methods: {
     showSettingWindow() {
@@ -147,13 +153,13 @@ export default {
                 label: {
                   normal: {
                     show: true,
-                    formatter: "{b}\n{c}",
+                    formatter: "{b}\n{c}次",
                     position: "right"
                   }
                 },
                 labelLine: {
                   length: 5,
-                  length2: 5
+                  length2: 15
                 }
               }
             ]

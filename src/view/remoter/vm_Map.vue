@@ -1,6 +1,6 @@
 <template>
   <div class="box" id="vm3">
-    <div class="box-header">
+    <div class="box-header" :title="hintText">
       <span class="title pos-left">{{title}}</span>
       <ul class="tools pos-right">
         <li class="item">
@@ -52,8 +52,8 @@ import dlMap from "@/view/remoter/dl_Map";
 export default {
   data() {
     return {
-      date: this.yesterday(),
-      timeLimit: this.yesterday(),
+      date: this.dateShift(-1),
+      timeLimit: this.dateShift(-1),
       showSetting: false,
       showLoading: false,
       chartInstance: null,
@@ -65,6 +65,11 @@ export default {
   },
   props: {
     title: String
+  },
+  computed:{
+    hintText(){
+      return `当前显示是${this.date}这一天的数据`
+    }
   },
   components: {
     "x-loading": Loading,

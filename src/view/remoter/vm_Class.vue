@@ -1,6 +1,6 @@
 <template>
   <div class="box">
-    <div class="box-header">
+    <div class="box-header" :title="hintText">
       <span class="title pos-left">{{title}}</span>
       <ul class="tools pos-right">
         <li class="item">
@@ -14,16 +14,16 @@
       <div class="chart" id="chart-remoter-2"></div>
       <ul class="towerlist">
         <li class="item">
-          <div class="title">高频隐患</div>
-          <div class="subtitle fg-white">{{highFrequencyType}}</div>
+          <div class="title">高频告警隐患类型</div>
+          <div class="subtitle fg-red">{{highFrequencyType}}</div>
         </li>
         <li class="item">
-          <div class="title">当日隐患总数</div>
+          <div class="title">累计总告警量（次）</div>
           <div class="subtitle num fg-orange">{{risenum}}</div>
         </li>
         <li class="item">
           <div class="title">此隐患主要集中地</div>
-          <div class="subtitle fg-white">{{majorType}}</div>
+          <div class="subtitle fg-cyan">{{majorType}}</div>
         </li>
       </ul>
       <div class="chartSetting" v-show="showSetting">
@@ -89,6 +89,11 @@ export default {
   },
   props: {
     title: String
+  },
+  computed:{
+    hintText(){
+      return `显示数据自${this.startTime}起，截止至${this.endTime}`
+    }
   },
   components: {
     "x-loading": Loading,
@@ -172,6 +177,7 @@ export default {
               axisLabel: {
                 show: true,
                 inside: false,
+                
                 textStyle: {
                   color: "rgba(255,255,255,1)",
                   fontWeight: "normal",
@@ -235,7 +241,8 @@ export default {
                   normal: {
                     show: true,
                     color: "#fff",
-                    position: "right"
+                    position: "right",
+                    formatter:'{c}次'
                   }
                 },
                 zlevel: 2,

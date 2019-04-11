@@ -161,6 +161,7 @@ export default {
     },
     query(val) {
       this.equipmentType = val?val:this.equipmentType;
+     
       this.showDialog = true;
       this.list = [];
       this.pageHandler(1);

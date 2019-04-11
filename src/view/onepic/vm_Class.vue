@@ -15,7 +15,7 @@
       <ul class="towerlist" v-cloak>
         <li class="item">
           <div class="title">高频警情类型</div>
-          <div class="subtitle fg-white">{{highFrequencyPlace}}</div>
+          <div class="subtitle fg-red">{{highFrequencyPlace}}</div>
         </li>
         <li class="item">
           <div class="title">环比上月增长</div>

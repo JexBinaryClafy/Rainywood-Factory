@@ -14,7 +14,7 @@
       <div class="dialog-body scroll">
         <ul class="panel">
           <li class="item">
-            <input type="text" class="textbox" v-model="keyword" placeholder="请输入关键字搜索">
+            <input type="text" class="textbox" v-model="keyword" placeholder="请输入标题作为关键字搜索">
           </li>
           <li class="item">
             <button class="btn bg-blue" type="button" @click="query()">
@@ -84,7 +84,9 @@ export default {
       district: "",
       showDialog: false,
       showLoading: false,
-      dialogTitle: "教育详情"
+      dialogTitle: "教育详情",
+      startTime:this.$parent.startTime,
+      endTime:this.$parent.endTime
     };
   },
   components: {
@@ -102,7 +104,9 @@ export default {
         type: this.type,
         pageSize: this.pageSize,
         pageIndex: this.page,
-        keyword: this.keyword
+        keyword: this.keyword,
+        startTime:this.startTime,
+        endTime:this.endTime
       };
       this.showLoading = true;
       axios.get(this.URLHEAD + "GovernmentWindows", { params: params }).then(res => {

@@ -1,15 +1,15 @@
 <template>
   <div>
     <div class="col xs-3">
-      <vmDistrict title="贵阳市隐患区域分布"></vmDistrict>
-      <vmClass title="贵阳市隐患类型分布"></vmClass>
+      <vmDistrict title="贵阳市隐患告警量区域分布"></vmDistrict>
+      <vmClass title="贵阳市隐患告警类型分布"></vmClass>
     </div>
     <div class="col xs-6">
       <vmMap title="贵阳市消防安全评估热力图"></vmMap>
     </div>
     <div class="col xs-3">
-      <vmTimeliness title="贵阳市消防安全隐患时间特征"></vmTimeliness>
-      <vmPatrol title="贵阳市消防安全巡查/隐患对比分析"></vmPatrol>
+      <vmTimeliness title="贵阳市消防隐患告警趋势"></vmTimeliness>
+      <vmPatrol title="贵阳市消防安全巡查/隐患告警对比"></vmPatrol>
     </div>
   </div>
 </template>

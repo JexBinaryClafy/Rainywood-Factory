@@ -7,15 +7,15 @@
       <div class="chart" id="chart-party-1"></div>
       <ul class="towerlist">
         <li class="item">
-          <div class="title">最受欢迎课件类型</div>
+          <div class="title">热度最高课件类型</div>
           <div class="subtitle num fg-orange">{{coursewareType}}</div>
         </li>
         <li class="item">
           <div class="title">课件最丰富类型</div>
-          <div class="subtitle num fg-orange">{{richType}}</div>
+          <div class="subtitle num fg-cyan">{{richType}}</div>
         </li>
         <li class="item">
-          <div class="title">累计课件总量</div>
+          <div class="title">累计课件总量（个）</div>
           <div class="subtitle num fg-green">{{count}}</div>
         </li>
       </ul>
@@ -45,7 +45,9 @@ export default {
       chartData: null,
       chartInstance: null,
       showModal: false,
-      keyModal: null
+      keyModal: null,
+      startTime:this.dateShift(-3650),
+      endTime:this.dateShift(0)
     };
   },
   props: {
@@ -75,8 +77,14 @@ export default {
     },
     renderChart() {
       let $this = this;
+      let params = {
+        startTime:this.startTime,
+        endTime:this.endTime
+      }
       this.showLoading=true
-      axios.get(this.URLHEAD + 'GovernmentEducationr').then(res=>{
+      axios.get(this.URLHEAD + 'GovernmentEducationr',{
+        params:params
+      }).then(res=>{
           let data = res.data
           this.coursewareType=data.Data.coursewareType
           this.richType=data.Data.richType
