@@ -26,7 +26,9 @@ export default {
       option: null,
       params: null,
       showModal: false,
-      keyModal: null
+      keyModal: null,
+      startTime:this.dateShift(-3650),
+      endTime:this.dateShift(0)
     };
   },
   props: {
@@ -42,8 +44,14 @@ export default {
   methods: {
     renderChart() {
       let $this = this;
+      let params = {
+        startTime:this.startTime,
+        endTime:this.endTime
+      }
       this.showLoading=true
-      axios.get(this.URLHEAD + "WHJSLTHY").then(res => {
+      axios.get(this.URLHEAD + "WHJSLTHY",{
+        params:params
+      }).then(res => {
         let data = res.data;
         this.option = {
           tooltip: {

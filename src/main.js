@@ -9,8 +9,8 @@ import echarts from 'echarts'
 
 require('@/assets/css/style.css')
 Vue.prototype.bus = bus
-Vue.prototype.URLHEAD = 'http://localhost:62578/Interface/API.aspx?Method='
-//Vue.prototype.URLHEAD = 'http://114.115.153.22:3333/Interface/API.aspx?Method='
+//Vue.prototype.URLHEAD = 'http://localhost:62578/Interface/API.aspx?Method='
+Vue.prototype.URLHEAD = 'http://114.115.153.22:3333/Interface/API.aspx?Method='
 Vue.prototype.COLORS=[
   '#37a2da', '#32c5e9', '#67e0e3', '#9fe6b8', '#ffdb5c', '#ff9f7f', '#e062ae', '#e690d1', '#e7bcf3',
   '#9d96f5', '#8378ea', '#96bfff'

@@ -14,7 +14,7 @@
       <div class="dialog-body scroll">
         <ul class="panel">
           <li class="item">
-            <input type="text" class="textbox" v-model="keyword" placeholder="请输入关键字搜索">
+            <input type="text" class="textbox" v-model="keyword" placeholder="请以姓名作为关键字搜索">
           </li>
           <li class="item">
             <button class="btn bg-blue" type="button" @click="query()">
@@ -87,7 +87,7 @@ export default {
       keyword:'',
       showDialog: false,
       showLoading: false,
-      dialogTitle: "业务能力指数清单",
+      dialogTitle: "党员清单",
       detachmentName: this.take
     };
   },
@@ -106,7 +106,9 @@ export default {
         keyword:this.keyword,
         detachmentName:this.detachmentName,
         pageIndex:this.page,
-        pageSize:this.pageSize
+        pageSize:this.pageSize,
+        startTime:this.$parent.startTime,
+        endTime:this.$parent.endTime
       };
       this.showLoading=true
       axios.get(this.URLHEAD+'GartyMemberWinddows',{params:params}).then(res=>{

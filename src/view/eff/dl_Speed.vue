@@ -2,7 +2,7 @@
   <div class="mask" v-show="showDialog">
     <div class="dialog">
       <div class="dialog-header">
-        <div class="title pos-left">{{take}} - {{dialogTitle}}</div>
+        <div class="title pos-left">{{take}}% - {{dialogTitle}}</div>
         <ul class="tools pos-right">
           <li class="item">
             <button class="btn" type="button" @click="closeDialog">
@@ -14,7 +14,7 @@
       <div class="dialog-body scroll">
         <ul class="panel">
           <li class="item">
-            <input type="date" class="datepicker" v-model="date" :max="timeLimit">
+            <input type="text" name="" id="" v-model="keyword" placeholder="请以姓名作为关键字搜索" class="textbox">
           </li>
           <li class="item">
             <button class="btn bg-blue" type="button" @click="query()">
@@ -78,9 +78,9 @@ export default {
       showDialog: false,
       showLoading: false,
       level: this.take,
-      dialogTitle: "业务能力指数清单",
-      date: this.today(),
-      timeLimit:this.today()
+      keyword:null,
+      dialogTitle: "响应速度指数清单",
+      date: this.dateShift(0)
     };
   },
   components: {
@@ -98,7 +98,8 @@ export default {
         level: this.level,
         pageSize: this.pageSize,
         pageIndex: this.page,
-        indexDate: this.date
+        indexDate: this.$parent.date,
+        userName:this.keyword
       };
       this.showLoading=true
       axios.get(this.URLHEAD+'XN_XYSD_TC',{params:params}).then(res=>{

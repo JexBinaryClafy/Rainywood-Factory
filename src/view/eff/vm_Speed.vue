@@ -1,6 +1,6 @@
 <template>
-  <div class="box" id="vm3">
-    <div class="box-header">
+  <div class="box">
+    <div class="box-header" :title="hintText">
       <span class="title pos-left">{{title}}</span>
       <ul class="tools pos-right">
         <li class="item">
@@ -15,17 +15,13 @@
       <ul class="towerlist">
         <li class="item">
           <div class="title">占比最高层级</div>
-          <div class="subtitle fg-white">{{maxName}}</div>
+          <div class="subtitle num fg-cyan">{{maxName}}<small>%</small></div>
         </li>
         <li class="item">
           <div class="title">最高层级人数</div>
           <div class="subtitle num fg-red">
             {{maxZB}}
           </div>
-        </li>
-        <li class="item">
-          <div class="title">指数平均水平</div>
-          <div class="subtitle num fg-green">{{average}}</div>
         </li>
       </ul>
       <div class="chartSetting" v-show="showSetting">
@@ -37,7 +33,7 @@
             <div class="form-item">
               <div class="label">日期</div>
               <div class="field">
-                <input type="date" class="datepicker" :max="timeLimit" v-model="date">
+                <input type="date" class="datepicker" :max="timeLimit" :min="timeMin" v-model="date">
               </div>
             </div>
           </div>
@@ -66,8 +62,9 @@ import dlSpeed from "@/view/eff/dl_Speed";
 export default {
   data() {
     return {
-      date: this.today(),
-      timeLimit: this.today(),
+      date: this.dateShift(0),
+      timeLimit: this.dateShift(0),
+      timeMin:this.dateShift(-365),
       showSetting: false,
       showLoading: false,
       maxName: "暂无",
@@ -83,6 +80,11 @@ export default {
   },
   props: {
     title: String
+  },
+  computed:{
+    hintText(){
+      return `显示的是${this.date.split('-')[0]}年${this.date.split('-')[1]}月的数据`
+    }
   },
   components: {
     "x-loading": Loading,
@@ -184,7 +186,7 @@ export default {
               label: {
                 normal: {
                   show: true,
-                  formatter: "{main|{b}}：\n{num|{c}}",
+                  formatter: "{main|{b}}：\n{num|{c}}{sub|%}",
                   position: "right",
                   rich: {
                     main: {
@@ -192,6 +194,9 @@ export default {
                     },
                     num: {
                       fontSize: 28
+                    },
+                    sub:{
+                      fontSize:16
                     }
                   }
                 }

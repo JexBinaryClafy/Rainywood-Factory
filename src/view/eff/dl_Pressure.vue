@@ -14,8 +14,7 @@
       <div class="dialog-body scroll">
         <ul class="panel">
           <li class="item">
-            <input type="date" class="datepicker" 
-            v-model="date" :max="timeLimit">
+            <input type="text" v-model="keyword" placeholder="请以姓名作为关键字搜索" class="textbox" />
           </li>
           <li class="item">
             <button class="btn bg-blue" type="button" @click="query()">
@@ -31,10 +30,11 @@
               <td>所属部位</td>
               <td>事项名称</td>
               <td>数据来源</td>
+              <td>事项开始时间</td>
               <td>处理时间</td>
             </tr>
           </thead>
-          <tbody>
+          <tbody v-if="total>0">
             <tr v-for="(item,idx) in list" :key="idx">
               <td>{{idx + 1}}</td>
               <td>
@@ -50,8 +50,16 @@
                 <div :title="item.Type">{{item.Type}}</div>
               </td>
               <td>
+                <div :title="item.startTime">{{item.startTime}}</div>
+              </td>
+              <td>
                 <div :title="item.SignTime">{{item.SignTime}}</div>
               </td>
+            </tr>
+          </tbody>
+          <tbody v-else>
+            <tr>
+              <td colspan="7"></td>
             </tr>
           </tbody>
         </table>
@@ -84,8 +92,8 @@ export default {
       showLoading: false,
       groupName: this.take,
       dialogTitle: "工作事项清单",
-      date: this.today(),
-      timeLimit:this.today()
+      keyword:null,
+      date:this.dateShift(0)
     };
   },
   components: {
@@ -103,7 +111,8 @@ export default {
         groupName: this.groupName,
         pageSize: this.pageSize,
         pageIndex: this.page,
-        indexDate: this.date
+        indexDate: this.date,
+        userName:this.keyword
       };
       this.showLoading=true
       axios.get(this.URLHEAD+'XN_GZYL_TC',{params:params}).then(res=>{
@@ -113,8 +122,9 @@ export default {
           this.showLoading=false
       })
     },
-    query(val) {
-      this.groupName = val?val:this.groupName;
+    query(obj) {
+      this.groupName = obj?obj.dep:this.groupName;
+      this.date = obj?obj.date:this.date
       this.showDialog = true;
       this.list = [];
       this.pageHandler(1);
@@ -123,7 +133,6 @@ export default {
     reset(){
         this.pageSize=10
         this.page=1
-        this.date=this.today()
     },
     closeDialog() {
       this.showDialog = false;

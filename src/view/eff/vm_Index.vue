@@ -1,6 +1,6 @@
 <template>
   <div class="box">
-    <div class="box-header">
+    <div class="box-header" :title="hintText">
       <span class="title pos-left">{{title}}</span>
       <ul class="tools pos-right">
         <li class="item">
@@ -21,7 +21,7 @@
             <div class="form-item">
               <div class="label">日期</div>
               <div class="field">
-                <input type="date" class="datepicker" :max="timeLimit" v-model="date">
+                <input type="date" class="datepicker" :max="timeLimit" :min="timeMin" v-model="date">
               </div>
             </div>
           </div>
@@ -50,8 +50,9 @@ import dlIndex from "@/view/eff/dl_Index";
 export default {
   data() {
     return {
-      date: this.today(),
-      timeLimit: this.today(),
+      date: this.dateShift(0),
+      timeLimit: this.dateShift(0),
+      timeMin:this.dateShift(-365),
       showSetting: false,
       showLoading: false,
       chartInstance: null,
@@ -61,7 +62,7 @@ export default {
       keyModal: null,
       chartData: null,
       autoflip: false,
-      ticketfn: null
+      ticketfn: null,
     };
   },
   props: {
@@ -71,6 +72,11 @@ export default {
     "x-loading": Loading,
     "x-pager": Pager,
     "dl-Index": dlIndex
+  },
+  computed:{
+    hintText(){
+      return `显示的是${this.date.split('-')[0]}年${this.date.split('-')[1]}月的数据`
+    }
   },
   mounted() {
     this.renderChart();

@@ -1,6 +1,6 @@
 <template>
   <div class="box" style="margin-bottom:8px;">
-    <div class="box-header">
+    <div class="box-header" title="显示自系统上线以来，截止至今天的数据">
       <span class="title pos-left">{{title}}</span>
     </div>
     <div class="box-body">

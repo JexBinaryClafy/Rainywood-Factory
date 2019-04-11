@@ -101,7 +101,7 @@ export default {
     pageHandler(page) {
       this.page = page;
       let params = {
-        type: this.type,
+        parameterType: this.type,
         pageSize: this.pageSize,
         pageIndex: this.page,
         keyword: this.keyword,

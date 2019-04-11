@@ -1,6 +1,6 @@
 <template>
   <div class="box" style="margin-bottom:8px;height:466px;">
-    <div class="box-header">
+    <div class="box-header" title="显示自系统上线以来，截止至今天的数据">
       <span class="title pos-left">{{title}}</span>
     </div>
     <div class="box-body">
@@ -17,7 +17,7 @@
           </div>
         </li>
       </ul>
-      <ul class="beltlist pos-right" style="width:635px;">
+      <ul class="beltlist pos-right" style="width:535px;">
         <li class="item1" v-for="(item,idx) in listNews" :key="idx">
           <div style="float:left;padding-left:10px;color:#f09400;padding-top:20px">
             <div class>浏览次数</div>
@@ -44,7 +44,9 @@ export default {
         return {
             listWords:[],
             listNews:[],
-            showLoading:false
+            showLoading:false,
+            startTime:this.dateShift(-3650),
+            endTime:this.dateShift(0)
         }
     },
     props:{
@@ -56,7 +58,13 @@ export default {
     mounted() {
         this.showLoading=true
         let aysncQueue = 2
-        axios.get(this.URLHEAD + 'CiYun').then(res=>{
+        let params = {
+          startTime:this.startTime,
+          endTime:this.endTime
+        }
+        axios.get(this.URLHEAD + 'CiYun',{
+          params:params
+        }).then(res=>{
             let data = res.data.Data.slice(0,5)
             this.listWords = data
             aysncQueue--

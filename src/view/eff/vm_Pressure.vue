@@ -1,7 +1,14 @@
 <template>
-  <div class="box" id="vm4">
-    <div class="box-header">
+  <div class="box">
+    <div class="box-header" :title="hintText">
       <span class="title pos-left">{{title}}</span>
+      <ul class="tools pos-right">
+        <li class="item">
+          <button class="btn" type="button" @click="showSettingWindow">
+            <i class="icon icon-setting"></i>
+          </button>
+        </li>
+      </ul>
     </div>
     <div class="box-body">
       <div style="height:417px" class="chart" id="chart-eff-4"></div>
@@ -15,14 +22,14 @@
               <div class="label">开始日期</div>
               <div class="field">
                 <input type="date" class="datepicker" 
-                v-model="startTime" :max="timeLimit">
+                v-model="startTime" :max="timeLimit" :min="timeMin">
               </div>
             </div>
             <div class="form-item">
               <div class="label">结束日期</div>
               <div class="field">
                 <input type="date" class="datepicker" 
-                v-model="endTime" :max="timeLimit">
+                v-model="endTime" :max="timeLimit" :min="timeMin">
               </div>
             </div>
           </div>
@@ -51,9 +58,10 @@ import dlPressure from "@/view/eff/dl_Pressure";
 export default {
   data() {
     return {
-      startTime:this.oneMonthAgo(),
-      endTime: this.today(),
-      timeLimit: this.today(),
+      startTime:this.dateShift(-365),
+      endTime: this.dateShift(0),
+      timeLimit: this.dateShift(0),
+      timeMin:this.dateShift(-365),
       showSetting: false,
       showLoading: false,
       chartInstance: null,
@@ -65,6 +73,11 @@ export default {
   },
   props: {
     title: String
+  },
+  computed:{
+    hintText(){
+      return `显示数据自${this.startTime}起，截止至${this.endTime}`
+    }
   },
   components: {
     "x-loading": Loading,
@@ -127,7 +140,7 @@ export default {
           let data = yData;
 
           let series = [];
-          for (var i = 0; i < 13; i++) {
+          for (var i = 0; i < yData.length; i++) {
             series.push({
               name: name[i],
               type: "line",
@@ -203,7 +216,7 @@ export default {
             },
             grid: {
               borderWidth: 0,
-              top: 60,
+              top: 90,
               bottom: 15,
               left: 40,
               right: 40,
@@ -276,9 +289,13 @@ export default {
           this.chartInstance = this.$Crender('chart-eff-4',this.option);
           
           this.chartInstance.on("click", e => {
+            debugger
             let districtName = e.seriesName;
-            $this.keyModal = districtName;
-            $this.$refs.dialog.query(districtName);
+            $this.keyModal = districtName+'在'+e.name;
+            $this.$refs.dialog.query({
+              dep:e.seriesName,
+              date:e.name
+            });
           });
           this.showLoading = false;
       })

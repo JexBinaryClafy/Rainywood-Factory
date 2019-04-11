@@ -105,7 +105,7 @@ export default {
       });
     },
     query(n) {
-      this.level = n?n:this.level;
+      this.date = n?n:this.date;
       this.showDialog = true;
       this.list = [];
       this.pageHandler(1);

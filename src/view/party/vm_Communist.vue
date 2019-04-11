@@ -5,7 +5,6 @@
     </div>
     <div class="box-body">
       <div class="fullsize chart" id="chart-party-4"></div>
-
       <x-loading :show="showLoading"></x-loading>
       <dl-Communist ref="dialog" :show="showModal" :take="keyModal"></dl-Communist>
     </div>
@@ -27,7 +26,9 @@ export default {
       option: null,
       params: null,
       showModal: false,
-      keyModal: null
+      keyModal: null,
+      startTime:this.dateShift(-3650),
+      endTime:this.dateShift(0)
     };
   },
   props: {
@@ -61,7 +62,9 @@ export default {
         endTime: this.endTime
       };
       this.showLoading = true;
-      axios.get(this.URLHEAD + "GartyMemberCondition").then(res => {
+      axios.get(this.URLHEAD + "GartyMemberCondition",{
+        params:this.params
+      }).then(res => {
         let data = res.data;
         this.option = {
           legend: {

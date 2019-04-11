@@ -14,7 +14,7 @@
       <div class="dialog-body scroll">
         <ul class="panel">
           <li class="item">
-            <input type="date" class="datepicker" v-model="date" :max="timeLimit">
+            <input type="text" name="" v-model="keyword" placeholder="请以姓名作为关键字搜索" id="" class="textbox">
           </li>
           <li class="item">
             <button class="btn bg-blue" type="button" @click="query()">
@@ -80,7 +80,7 @@ export default {
       level: this.take,
       dialogTitle: "业务能力指数清单",
       date: this.today(),
-      timeLimit:this.today()
+      keyword:null
     };
   },
   components: {
@@ -98,7 +98,8 @@ export default {
         level: this.level,
         pageSize: this.pageSize,
         pageIndex: this.page,
-        indexDate: this.date
+        indexDate: this.$parent.date,
+        userName:this.keyword
       };
       this.showLoading=true
       axios.get(this.URLHEAD+'XN_YWNL_TC',{params:params}).then(res=>{

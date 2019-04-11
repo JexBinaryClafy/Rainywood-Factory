@@ -1,6 +1,6 @@
 <template>
-  <div class="box" id="vm2">
-    <div class="box-header">
+  <div class="box">
+    <div class="box-header" :title="hintText">
       <span class="title pos-left">{{title}}</span>
       <ul class="tools pos-right">
         <li class="item">
@@ -24,10 +24,6 @@
             <small>%</small>
           </div>
         </li>
-        <li class="item">
-          <div class="title">指数平均水平</div>
-          <div class="subtitle fg-white">{{average}}</div>
-        </li>
       </ul>
       <div class="chartSetting" v-show="showSetting">
         <div class="form">
@@ -38,7 +34,7 @@
             <div class="form-item">
               <div class="label">日期</div>
               <div class="field">
-                <input type="date" class="datepicker" :max="timeLimit" v-model="date">
+                <input type="date" class="datepicker" :max="timeLimit" :min="timeMin" v-model="date">
               </div>
             </div>
           </div>
@@ -67,8 +63,9 @@ import dlCapacity from "@/view/eff/dl_Capacity";
 export default {
   data() {
     return {
-      date: this.today(),
-      timeLimit: this.today(),
+      date: this.dateShift(0),
+      timeLimit: this.dateShift(0),
+      timeMin:this.dateShift(-365),
       showSetting: false,
       showLoading: false,
       maxName: "暂无",
@@ -89,6 +86,11 @@ export default {
     "x-loading": Loading,
     "x-pager": Pager,
     "dl-Capacity": dlCapacity
+  },
+  computed:{
+    hintText(){
+      return `显示的是${this.date.split('-')[0]}年${this.date.split('-')[1]}月的数据`
+    }
   },
   mounted() {
     this.renderChart();
@@ -160,7 +162,7 @@ export default {
                 max: 100,
                 minSize: "0%",
                 maxSize: "100%",
-                sort: "descending",
+                sort: "ascending",
                 gap: 0,
                 data: [],
                 roseType: true,

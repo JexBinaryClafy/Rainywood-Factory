@@ -1,6 +1,6 @@
 <template>
   <div class="box" style="margin-bottom:8px;">
-    <div class="box-header">
+    <div class="box-header" title="显示自系统上线以来，截止至今天的数据">
       <span class="title pos-left">{{title}}</span>
     </div>
     <div class="box-body">
@@ -42,7 +42,9 @@ export default {
       option: null,
       params: null,
       showModal: false,
-      keyModal: null
+      keyModal: null,
+      startTime:this.dateShift(-360),
+      endTime:this.dateShift(0)
     };
   },
   props: {
@@ -65,7 +67,13 @@ export default {
     },
     renderChart() {
       this.showLoading = true;
-      axios.get(this.URLHEAD + "getSZYD").then(res => {
+      let params = {
+        startTime:this.startTime,
+        endTime:this.endTime
+      }
+      axios.get(this.URLHEAD + "getSZYD",{
+        params:params
+      }).then(res => {
         let $this = this;
         let data = res.data;
         this.maxType = data.Data.maxType;
@@ -98,6 +106,7 @@ export default {
             {
               type: "pie",
               radius: ["37%", "65%"],
+              center:['50%','55%'],
               clockwise: true,
               z: 5,
               itemStyle: {
@@ -140,10 +149,10 @@ export default {
               },
               labelLine: {
                 normal: {
-                  length: 22,
-                  length2: 0,
+                  length: 10,
+                  length2: 5,
                   lineStyle: {
-                    width: 2
+                    width: 1
                   }
                 }
               },

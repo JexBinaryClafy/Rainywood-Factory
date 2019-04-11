@@ -14,7 +14,7 @@
       <div class="dialog-body scroll">
         <ul class="panel">
           <li class="item">
-            <input type="date" :max="timeLimit" class="datepicker" v-model="date">
+            <input type="date" :max="timeLimit" :min="timeMin" class="datepicker" v-model="date">
           </li>
           <li class="item">
             <input type="text" class="textbox" v-model="keyword" placeholder="请输入关键字搜索">
@@ -77,8 +77,9 @@ export default {
       district: "",
       showDialog: false,
       dialogTitle: "效能指数列表",
-      date: this.today(),
-      timeLimit: this.today(),
+      date: this.dateShift(0),
+      timeMin:this.dateShift(-365),
+      timeLimit: this.dateShift(0),
       showLoading: false
     };
   },
@@ -90,6 +91,11 @@ export default {
     take: String,
     show: Boolean
   },
+  computed:{
+    hintText(){
+      return `显示${this.date}的数据`
+    }
+  },
   methods: {
     pageHandler(page) {
       this.page = page;
@@ -98,7 +104,7 @@ export default {
         key: this.keyword,
         pageSize: this.pageSize,
         pageIndex: this.page,
-        indexDate: this.date
+        indexDate: this.$parent.date
       };
       this.showLoading = true;
       axios
@@ -114,6 +120,7 @@ export default {
     },
     query(val) {
       this.district = val?val:this.district;
+      this.date = this.$parent.date
       this.showDialog = true;
       this.list = [];
       this.pageHandler(1);

@@ -119,7 +119,9 @@ export default {
       let params = {
         SBDW: this.depname,
         pageSize: this.pageSize,
-        pageIndex: this.page
+        pageIndex: this.page,
+        startTime:this.startTime,
+        endTime:this.endTime
       };
       this.showLoading = true;
       axios.get(this.URLHEAD + "SZYDTC", { params: params }).then(res => {
@@ -132,6 +134,8 @@ export default {
     },
     query(n) {
       this.depname = n?n:this.depname;
+      this.startTime=this.$parent.startTime
+      this.endTime=this.$parent.endTime
       this.showDialog = true;
       this.list = [];
       this.pageHandler(1);

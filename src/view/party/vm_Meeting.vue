@@ -26,6 +26,7 @@
                   class="datepicker"
                   id="startTime"
                   :max="timeLimit"
+                  :min="timeMin"
                   v-model="startTime"
                 >
               </div>
@@ -38,6 +39,7 @@
                   class="datepicker"
                   id="endTime"
                   :max="timeLimit"
+                  :min="timeMin"
                   v-model="endTime"
                 >
               </div>
@@ -67,9 +69,10 @@ import dlMeeting from "@/view/party/dl_Meeting";
 export default {
   data() {
     return {
-      timeLimit: this.today(),
-      startTime: this.oneMonthAgo(),
-      endTime: this.today(),
+      timeLimit: this.dateShift(0),
+      timeMin:this.dateShift(-365),
+      startTime: this.dateShift(-30),
+      endTime: this.dateShift(0),
       showSetting: false,
       showLoading: false,
       chartInstance: null,
@@ -244,7 +247,7 @@ export default {
           this.chartInstance.on("click", e => {
             console.log(e);
             let type = e.name;
-            $this.showModal=true
+            $this.keyModal=type
             $this.$refs.dialog.query(type)
           });
           this.showLoading = false;
