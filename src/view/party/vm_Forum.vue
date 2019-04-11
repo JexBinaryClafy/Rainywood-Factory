@@ -5,7 +5,6 @@
     </div>
     <div class="box-body">
       <div class="chart fullsize" id="chart-party-5"></div>
-
       <x-loading :show="showLoading"></x-loading>
       <dl-Forum ref="dialog" :show="showModal" :take="keyModal"></dl-Forum>
     </div>
@@ -218,10 +217,10 @@ export default {
             {
               name: "热度指数",
               type: "bar",
-              data: [580, 720, 650, 780, 540, 1140, 240, 540],
-              //    data.Data.map(item => {
-              //    return item.value2;
-              //}),
+              //data: [580, 720, 650, 780, 540, 1140, 240, 540],
+              data:data.Data.map(item => {
+                 return item.value2;
+              }),
               barWidth: 10,
               barGap: 0.2,
               label: {

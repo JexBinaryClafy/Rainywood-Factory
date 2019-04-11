@@ -76,7 +76,7 @@ export default {
       showSetting: false,
       showLoading: false,
       highFrequencyType: "暂无",
-      risenum: "+0%",
+      risenum: "0",
       majorType: "暂无",
       chartInstance: null,
       option: null,

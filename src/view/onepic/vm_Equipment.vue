@@ -325,7 +325,8 @@ export default {
                   normal: {
                     show: true,
                     color: "#fff",
-                    position: "inside"
+                    position: "inside",
+                    formatter:'报损报修:{c}件'
                   }
                 },
                 zlevel: 2,

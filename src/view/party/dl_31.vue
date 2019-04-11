@@ -15,12 +15,12 @@
         <ul class="panel">
           <li class="item">
             <input type="date" value class="datepicker" 
-            v-model="startTime" :max="timeLimit" placeholder="开始时间">
+            v-model="startTime" :max="timeLimit" :min="timeMin" placeholder="开始时间">
           </li>
           <li class="item">至</li>
           <li class="item">
             <input type="date" value class="datepicker" 
-            v-model="endTime" :max="timeLimit" placeholder="开始时间">
+            v-model="endTime" :max="timeLimit" :min="timeMin" placeholder="开始时间">
           </li>
           <li class="item">
             <input type="text" class="textbox" v-model="keyword" placeholder="请输入关键字搜索">
@@ -97,9 +97,10 @@ export default {
       keyword:'',
       maxPage: 10,
       dialogTitle:'三重一大申报事项清单',
-      startTime:this.oneMonthAgo(),
-      endTime:this.today(),
-      timeLimit:this.today(),
+      startTime:this.dateShift(-30),
+      endTime:this.dateShift(0),
+      timeLimit:this.dateShift(0),
+      timeMin:this.dateShift(-365),
       showDialog: false,
       showLoading: false,
       depname: this.take

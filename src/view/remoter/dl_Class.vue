@@ -44,7 +44,7 @@
             <input type="text" class="textbox" v-model="keyword" placeholder="请输入关键字搜索">
           </li>
           <li class="item">
-            <button class="btn bg-blue" type="button" @click="query">
+            <button class="btn bg-blue" type="button" @click="query()">
               <span class="text">查询</span>
             </button>
           </li>
@@ -116,7 +116,7 @@ export default {
         "乌当区",
         "花溪区",
         "观山湖区",
-        "乌当区",
+        "经开区",
         "白云区",
         "清镇市",
         "息烽县",
@@ -187,6 +187,7 @@ export default {
       this.keyword = "";
       this.page = 1;
       this.pageSize = 10;
+      this.district=''
       this.startTime = this.oneMonthAgo();
       this.endTime = this.today();
     },

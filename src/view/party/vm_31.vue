@@ -43,7 +43,7 @@ export default {
       params: null,
       showModal: false,
       keyModal: null,
-      startTime:this.dateShift(-360),
+      startTime:this.dateShift(-3650),
       endTime:this.dateShift(0)
     };
   },

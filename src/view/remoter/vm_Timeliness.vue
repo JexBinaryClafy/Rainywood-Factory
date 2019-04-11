@@ -159,7 +159,7 @@ export default {
             yAxis: [
               {
                 type: "value",
-                name: "火灾隐患（个）",
+                name: "隐患告警（次）",
                 axisTick: {
                   show: false
                 },
@@ -184,7 +184,7 @@ export default {
             ],
             series: [
               {
-                name: "火灾隐患",
+                name: "隐患告警",
                 type: "line",
                 smooth: true,
                 symbol: "circle",
