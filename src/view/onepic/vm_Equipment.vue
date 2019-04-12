@@ -86,8 +86,8 @@ export default {
         this.pageindex = 0;
       }
       let params = {
-        startTime: this.startTime,
-        endTime: this.endTime,
+        startTime:this.startTime + ' 00:00:00',
+          endTime:this.endTime + '23:59:59',
         pageindex: this.pageindex,
         pageSize: this.pageSize,
         HTTEST: "test"

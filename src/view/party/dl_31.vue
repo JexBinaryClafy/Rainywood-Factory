@@ -121,8 +121,8 @@ export default {
         SBDW: this.depname,
         pageSize: this.pageSize,
         pageIndex: this.page,
-        startTime:this.startTime,
-        endTime:this.endTime
+        startTime:this.startTime + ' 00:00:00',
+          endTime:this.endTime + '23:59:59'
       };
       this.showLoading = true;
       axios.get(this.URLHEAD + "SZYDTC", { params: params }).then(res => {
