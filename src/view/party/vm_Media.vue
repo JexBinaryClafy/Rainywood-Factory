@@ -59,8 +59,8 @@ export default {
         this.showLoading=true
         let aysncQueue = 2
         let params = {
-          startTime:this.startTime,
-          endTime:this.endTime
+          startTime:this.startTime + ' 00:00:00',
+          endTime:this.endTime + ' 23:59:59'
         }
         axios.get(this.URLHEAD + 'CiYun',{
           params:params

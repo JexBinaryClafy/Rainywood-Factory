@@ -186,7 +186,7 @@ export default {
               label: {
                 normal: {
                   show: true,
-                  formatter: "{main|{b}}：\n{num|{c}}{sub|%}",
+                  formatter: "{main|{b}%}：\n{num|{c}}{sub|人}",
                   position: "right",
                   rich: {
                     main: {

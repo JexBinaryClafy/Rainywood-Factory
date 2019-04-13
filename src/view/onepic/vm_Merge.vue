@@ -192,7 +192,11 @@ export default {
                 type: "bar",
                 stack: "总量",
                 data: data.Data.map(o => {
-                  return o.val.hzjy_list;
+                  if(o.val.hzjy_list === ''){
+                    return 0
+                  }else{
+                    return o.val.hzjy_list;
+                  }                 
                 }),
                 barWidth: 10,
                 barGap: 1,
@@ -224,7 +228,12 @@ export default {
                 type: "bar",
                 stack: "总量",
                 data: data.Data.map(o => {
-                  return o.val.qxpj_list;
+                  if(o.val.qxpj_list===''){
+                    return 0
+                  }else{
+                    return o.val.qxpj_list;
+                  }
+                  
                 }),
                 barWidth: 10,
                 barGap: 1,
@@ -256,7 +265,12 @@ export default {
                 type: "bar",
                 stack: "总量",
                 data: data.Data.map(o => {
-                  return o.val.shjz_list;
+                  if(o.val.shjz_list === ''){
+                    return 0
+                  }else{
+                    return o.val.shjz_list;
+                  }
+                  
                 }),
                 barWidth: 10,
                 barGap: 1,
@@ -288,7 +302,12 @@ export default {
                 type: "bar",
                 stack: "总量",
                 data: data.Data.map(o => {
-                  return o.val.qtcd_list;
+                  if(o.val.qtcd_list === ''){
+                    return 0
+                  }else{
+                    return o.val.qtcd_list;
+                  }
+                  
                 }),
                 barWidth: 10,
                 barGap: 1,

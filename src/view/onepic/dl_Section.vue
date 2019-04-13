@@ -114,7 +114,7 @@ export default {
       startTime: this.$parent.startTime,
       endTime: this.$parent.endTime,
       timeLimit: this.today(),
-      timeMin:this.dateShift(-365),
+      timeMin: this.dateShift(-365),
       showLoading: false
     };
   },
@@ -153,9 +153,11 @@ export default {
         });
     },
     query(val) {
-      this.district=val?val:this.district
-      this.showDialog=true
-      this.list=[]
+      this.district = val ? val : this.district;
+      this.startTime = this.$parent.startTime;
+      this.endTime = this.$parent.endTime;
+      this.showDialog = true;
+      this.list = [];
       this.pageHandler(1);
     },
     reset() {
@@ -164,8 +166,6 @@ export default {
       this.page = 0;
       this.pageSize = 10;
       this.total = 10;
-      this.startTime = this.$parent.startTime;
-      this.endTime = this.$parent.endTime;
     },
     closeDialog() {
       this.showDialog = false;

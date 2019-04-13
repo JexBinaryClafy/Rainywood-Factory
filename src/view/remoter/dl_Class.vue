@@ -65,22 +65,22 @@
             <tr v-for="(item,idx) in list" :key="idx">
               <td style="width:5%;">{{idx + 1}}</td>
               <td style="width:25%;">
-                <div :title="item.address">{{item.ComName}}</div>
+                <div :title="item.ComName">{{item.ComName}}</div>
               </td>
               <td style="width:15%;">
-                <div :title="item.city">{{item.AreaMC}}</div>
+                <div :title="item.AreaMC">{{item.AreaMC}}</div>
               </td>
               <td style="width:15%;">
-                <div :title="item.pstType">{{item.LbMC || '暂无'}}</div>
+                <div :title="item.KindMC">{{item.KindMC || '暂无'}}</div>
               </td>
               <td style="width:15%;">
-                <div :title="item.person">{{item.FireDuty || '暂无'}}</div>
+                <div :title="item.FireDuty">{{item.FireDuty || '暂无'}}</div>
               </td>
               <td style="width:15%;">
-                <div :title="item.tel">{{item.FireDutyTel || '暂无'}}</div>
+                <div :title="item.FireDutyTel">{{item.FireDutyTel || '暂无'}}</div>
               </td>
               <td style="width:10%;">
-                <div :title="item.time">{{item.AlarmTime || '暂无'}}</div>
+                <div :title="item.AlarmTime">{{item.AlarmTime || '暂无'}}</div>
               </td>
             </tr>
           </tbody>
@@ -178,7 +178,7 @@ export default {
         });
     },
     query(val) {
-      this.type = val ? val : "";
+      this.type = val ? val : this.type;
       this.showDialog = true;
       this.list = [];
       this.pageHandler(1);

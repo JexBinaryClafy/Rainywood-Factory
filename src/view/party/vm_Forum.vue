@@ -44,8 +44,8 @@ export default {
     renderChart() {
       let $this = this;
       let params = {
-        startTime:this.startTime,
-        endTime:this.endTime
+        startTime:this.startTime + ' 00:00:00',
+          endTime:this.endTime + ' 23:59:59'
       }
       this.showLoading=true
       axios.get(this.URLHEAD + "WHJSLTHY",{
@@ -55,7 +55,6 @@ export default {
         this.option = {
           tooltip: {
             trigger: "axis",
-            formatter: "{b}<br />{a0}: {c0}<br />{a1}: {c1}",
             axisPointer: {
               type: "shadow",
               label: {

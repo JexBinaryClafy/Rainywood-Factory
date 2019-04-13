@@ -35,13 +35,13 @@
             <div class="form-item">
               <div class="label">开始时间</div>
               <div class="field">
-                <input type="date" class="datepicker" :max="timeLimit" v-model="startTime">
+                <input type="date" class="datepicker" :max="timeLimit" :min="timeMin" v-model="startTime">
               </div>
             </div>
             <div class="form-item">
               <div class="label">结束时间</div>
               <div class="field">
-                <input type="date" class="datepicker" :max="timeLimit" v-model="endTime">
+                <input type="date" class="datepicker" :max="timeLimit" :min="timeMin" v-model="endTime">
               </div>
             </div>
           </div>
@@ -73,6 +73,7 @@ export default {
       startTime: this.oneMonthAgo(),
       endTime: this.today(),
       timeLimit: this.today(),
+      timeMin:this.dateShift(-365),
       showSetting: false,
       showLoading: false,
       highFrequencyType: "暂无",
