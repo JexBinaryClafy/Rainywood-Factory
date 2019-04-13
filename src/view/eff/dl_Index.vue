@@ -101,7 +101,7 @@ export default {
       this.page = page;
       let params = {
         groupName: this.district,
-        key: this.keyword,
+        userName: this.keyword,
         pageSize: this.pageSize,
         pageIndex: this.page,
         indexDate: this.$parent.date

@@ -178,7 +178,7 @@ export default {
         });
     },
     query(val) {
-      this.type = val ? val : "";
+      this.type = val ? val : this.type;
       this.showDialog = true;
       this.list = [];
       this.pageHandler(1);

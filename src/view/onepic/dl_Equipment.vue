@@ -113,7 +113,7 @@ export default {
       maxPage: 10,
       showDialog: false,
       showLoading: false,
-      dialogTitle: "报修报损记录",
+      dialogTitle: "装备清单",
       equipmentType: null
     };
   },

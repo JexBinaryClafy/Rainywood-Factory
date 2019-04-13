@@ -131,6 +131,14 @@ export default {
     take: String,
     show: Boolean
   },
+  created(){
+    axios.get(this.URLHEAD+'YZT_ZDLB').then(res=>{
+      let data = res.data
+      this.disasterTypeArray=data.Data.map(o=>{
+        return o.DicKey
+      })
+    })
+  },
   methods: {
     pageHandler(page) {
       this.page = page;

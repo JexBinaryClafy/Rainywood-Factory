@@ -106,7 +106,7 @@ export default {
         pageIndex: this.page,
         keyword: this.keyword,
         startTime:this.startTime + ' 00:00:00',
-          endTime:this.endTime + '23:59:59'
+          endTime:this.endTime + ' 23:59:59'
       };
       this.showLoading = true;
       axios.get(this.URLHEAD + "GovernmentWindows", { params: params }).then(res => {

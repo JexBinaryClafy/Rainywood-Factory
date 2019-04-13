@@ -107,8 +107,8 @@ export default {
         BT: this.keyword,
         pageSize: this.pageSize,
         pageIndex: this.page,
-        startTime:this.$parent.startTime,
-        endTime:this.$parent.endTime,
+        startTime:this.startTime,
+        endTime:this.endTime,
         HTTEST: "test"
       };
       this.showLoading = true

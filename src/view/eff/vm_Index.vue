@@ -22,6 +22,7 @@
               <div class="label">日期</div>
               <div class="field">
                 <input type="date" class="datepicker" :max="timeLimit" :min="timeMin" v-model="date">
+
               </div>
             </div>
           </div>

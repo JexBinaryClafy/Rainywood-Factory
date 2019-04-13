@@ -14,7 +14,7 @@
       <div class="chart" id="chart-1"></div>
       <ul class="towerlist" v-cloak>
         <li class="item">
-          <div class="title">高灾情地区</div>
+          <div class="title">高警情部位</div>
           <div class="subtitle fg-red">{{highDisasterDistrict}}</div>
         </li>
         <li class="item">
@@ -25,7 +25,7 @@
           </div>
         </li>
         <li class="item">
-          <div class="title">上升明显区域</div>
+          <div class="title">警情上升明显部位</div>
           <div class="subtitle fg-orange">{{highDisasterType}}</div>
         </li>
       </ul>
@@ -80,7 +80,7 @@ import axios from "axios";
 import echarts from "echarts";
 import Loading from "@/components/Loading";
 import Pager from "@/components/Pager";
-import dlDistrict from "@/view/onepic/dl_District";
+import dlDistrict from "@/view/onepic/dl_Section";
 
 export default {
   data() {
@@ -254,7 +254,7 @@ export default {
               vm.keyModal = districtName;
               vm.date = {
                 startTime:this.startTime + ' 00:00:00',
-          endTime:this.endTime + '23:59:59'
+          endTime:this.endTime + ' 23:59:59'
               }
               vm.$refs.dialog.query(districtName);
             }

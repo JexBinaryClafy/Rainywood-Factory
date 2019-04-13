@@ -87,7 +87,7 @@ export default {
       }
       let params = {
         startTime:this.startTime + ' 00:00:00',
-          endTime:this.endTime + '23:59:59',
+          endTime:this.endTime + ' 23:59:59',
         pageindex: this.pageindex,
         pageSize: this.pageSize,
         HTTEST: "test"
@@ -326,7 +326,7 @@ export default {
                     show: true,
                     color: "#fff",
                     position: "inside",
-                    formatter:'报损报修:{c}件'
+                    formatter:'{c}件'
                   }
                 },
                 zlevel: 2,
