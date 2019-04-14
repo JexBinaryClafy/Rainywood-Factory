@@ -12,7 +12,7 @@
         </ul>
       </div>
       <div class="dialog-body scroll" style="background:#081526;">
-        <div class="col xs-6">
+        <div class="col xs-8">
           <div class="box">
             <div class="box-header">
               <span class="title pos-left">监管单位信息</span>
@@ -44,12 +44,16 @@
                   <div class="title">巡查隐患次数</div>
                   <div class="subtitle num fg-orange">{{YHCount}}</div>
                 </li>
+                <li class="item">
+                  <div class="title">报警主机告警</div>
+                  <div class="subtitle num fg-orange">{{BJCount}}</div>
+                </li>
               </ul>
               <x-loading ref="loadingBasic" :show="showLoadingBasic"></x-loading>
             </div>
           </div>
         </div>
-        <div class="col xs-6">
+        <div class="col xs-4">
           <div class="box">
             <div class="box-header">
               <span class="title pos-left">气象情况</span>
@@ -108,7 +112,8 @@
                       <div :title="item.time">{{item.time}}</div>
                     </td>
                     <td>
-                      <div :title="item.status">{{item.status}}</div>
+                      <div v-if="item.status ==0">未解决</div>
+                      <div v-else>已解决</div>
                     </td>
                   </tr>
                 </tbody>
@@ -147,7 +152,8 @@
                       <div :title="item.time">{{item.time}}</div>
                     </td>
                     <td>
-                      <div :title="item.status">{{item.status}}</div>
+                      <div v-if="item.status ==0">未解决</div>
+                      <div v-else>已解决</div>
                     </td>
                   </tr>
                 </tbody>
@@ -186,7 +192,8 @@
                       <div :title="item.time">{{item.time}}</div>
                     </td>
                     <td>
-                      <div :title="item.status">{{item.status}}</div>
+                      <div v-if="item.status ==0">未解决</div>
+                      <div v-else>已解决</div>
                     </td>
                   </tr>
                 </tbody>
@@ -225,7 +232,8 @@
                       <div :title="item.time">{{item.time}}</div>
                     </td>
                     <td>
-                      <div :title="item.status">{{item.status}}</div>
+                      <div v-if="item.status ==0">未解决</div>
+                      <div v-else>已解决</div>
                     </td>
                   </tr>
                 </tbody>
@@ -236,6 +244,46 @@
                 </tbody>
               </table>
               <x-loading ref="loadingYH" v-if="showLoadingYH"></x-loading>
+            </div>
+          </div>
+          <div class="box">
+            <div class="box-header">
+              <span class="title pos-left">报警主机告警记录</span>
+            </div>
+            <div class="box-body scroll heightlmt">
+              <table class="dtable">
+                <thead>
+                  <tr>
+                    <td>序号</td>
+                    <td>隐患内容</td>
+                    <td>隐患发现时间</td>
+                    <td>隐患处理状态</td>
+                  </tr>
+                </thead>
+                <tbody v-if="listBJ.length>0">
+                  <tr v-for="(item, index) in listBJ" :key="index">
+                    <td>{{index+1}}</td>
+                    <td>
+                      <div
+                        :title="item.detail == ''?'暂无详情':item.detail"
+                      >{{item.detail == ''?'暂无详情':item.detail}}</div>
+                    </td>
+                    <td>
+                      <div :title="item.time">{{item.time}}</div>
+                    </td>
+                    <td>
+                      <div v-if="item.status ==0">未解决</div>
+                      <div v-else>已解决</div>
+                    </td>
+                  </tr>
+                </tbody>
+                <tbody v-else>
+                  <tr>
+                    <td colspan="4">暂无告警内容</td>
+                  </tr>
+                </tbody>
+              </table>
+              <x-loading ref="loadingBJ" v-if="showLoadingBJ"></x-loading>
             </div>
           </div>
         </div>
@@ -273,14 +321,17 @@ export default {
       showLoadingDL: false,
       showLoadingYS: false,
       showLoadingYH: false,
+      showLoadingBJ:false,
       DYCount: 0,
       DLCount: 0,
       YSCount: 0,
       YHCount: 0,
+      BJCount: 0,
       listDY: [],
       listDL: [],
       listYS: [],
       listYH: [],
+      listBJ:[],
 
       comId: !this.take ? null : this.take.comId,
       name: !this.take ? null : this.take.comName
@@ -295,6 +346,7 @@ export default {
       this.listDL = [];
       this.listYS = [];
       this.listYH = [];
+      this.listBJ=[]
       this.query();
     },
     show(n, o) {
@@ -312,7 +364,7 @@ export default {
     calcScore() {
       let result = 100;
       result =
-        result - this.DYCount - this.DLCount - this.YSCount - this.YHCount;
+        result - this.DYCount - this.DLCount - this.YSCount - this.YHCount - this.BJCount;
       if (result >= 80) {
         this.scoreColor = "fg-green";
       } else if (result < 80 && result >= 60) {
@@ -334,6 +386,7 @@ export default {
       this.listDL = [];
       this.listYS = [];
       this.listYH = [];
+      this.listBJ = [];
       this.loadingBasic = true;
       axios
         .get(this.URLHEAD + "GetDetailed", {
@@ -349,6 +402,7 @@ export default {
           this.getDLAlarms();
           this.getYSAlarms();
           this.getYHAlarms();
+          this.getBJAlarms();
         });
     },
     getWeatherData() {
@@ -384,6 +438,7 @@ export default {
           this.DLCount = data.Data.DLCount;
           this.YSCount = data.Data.YSCount;
           this.YHCount = data.Data.YHCount;
+          this.BJCount = data.Data.BJCount;
           this.score = this.calcScore();
           this.loadingDY = false;
         });
@@ -406,6 +461,7 @@ export default {
           this.DLCount = data.Data.DLCount;
           this.YSCount = data.Data.YSCount;
           this.YHCount = data.Data.YHCount;
+          this.BJCount = data.Data.BJCount;
           this.score = this.calcScore();
           this.loadingDL = false;
         });
@@ -428,6 +484,7 @@ export default {
           this.DLCount = data.Data.DLCount;
           this.YSCount = data.Data.YSCount;
           this.YHCount = data.Data.YHCount;
+          this.BJCount = data.Data.BJCount;
           this.score = this.calcScore();
           this.loadingYS = false;
         });
@@ -450,8 +507,32 @@ export default {
           this.DLCount = data.Data.DLCount;
           this.YSCount = data.Data.YSCount;
           this.YHCount = data.Data.YHCount;
+          this.BJCount = data.Data.BJCount;
           this.score = this.calcScore();
           this.loadingYH = false;
+        });
+    },
+    getBJAlarms(){
+      let params = {
+        mc: this.basicData.MC,
+        type: "报警主机",
+        indexDate:this.$parent.date
+      };
+      this.loadingBJ = true;
+      axios
+        .get(this.URLHEAD + "GetGJDetaileNew", {
+          params: params
+        })
+        .then(res => {
+          let data = res.data;
+          this.listBJ = data.Data.gj;
+          this.DYCount = data.Data.DYCount;
+          this.DLCount = data.Data.DLCount;
+          this.YSCount = data.Data.YSCount;
+          this.YHCount = data.Data.YHCount;
+          this.BJCount = data.Data.BJCount;
+          this.score = this.calcScore();
+          this.loadingBJ = false;
         });
     },
     closeDialog() {

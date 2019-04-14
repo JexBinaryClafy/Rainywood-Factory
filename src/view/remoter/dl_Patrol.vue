@@ -102,7 +102,7 @@ export default {
         keyword: this.keyword,
         pageSize: this.pageSize,
         pageIndex: this.page,
-        selectTime: this.selectTime
+        indexDate: this.selectTime
       };
       this.showLoading = true;
       axios
