@@ -11,20 +11,20 @@ require('@/assets/css/style.css')
 Vue.prototype.bus = bus
 //Vue.prototype.URLHEAD = 'http://localhost:62578/Interface/API.aspx?Method='
 Vue.prototype.URLHEAD = 'http://114.115.153.22:3333/Interface/API.aspx?Method='
-Vue.prototype.COLORS=[
+Vue.prototype.COLORS = [
   '#37a2da', '#32c5e9', '#67e0e3', '#9fe6b8', '#ffdb5c', '#ff9f7f', '#e062ae', '#e690d1', '#e7bcf3',
   '#9d96f5', '#8378ea', '#96bfff'
 ]
 
-Vue.prototype.dateShift = function(offset){
+Vue.prototype.dateShift = function (offset) {
   let now = new Date()
-    let newTime = new Date(now.getTime() + (offset * 24 * 60 * 60 * 1000))
-    let obj = {
-        year: newTime.getFullYear(),
-        month: (newTime.getMonth() + 1 < 10) ? '0' + (newTime.getMonth() + 1) : newTime.getMonth() + 1,
-        day: newTime.getDate() < 10 ? '0' + newTime.getDate() : newTime.getDate()
-    }
-    return `${obj.year}-${obj.month}-${obj.day}`
+  let newTime = new Date(now.getTime() + (offset * 24 * 60 * 60 * 1000))
+  let obj = {
+    year: newTime.getFullYear(),
+    month: (newTime.getMonth() + 1 < 10) ? '0' + (newTime.getMonth() + 1) : newTime.getMonth() + 1,
+    day: newTime.getDate() < 10 ? '0' + newTime.getDate() : newTime.getDate()
+  }
+  return `${obj.year}-${obj.month}-${obj.day}`
 }
 
 Vue.prototype.$Crender = function (id, option) {
@@ -62,13 +62,18 @@ Vue.prototype.yesterday = function () {
   let obj = {
     year: now.getFullYear(),
     month: (now.getMonth() + 1) >= 10 ? now.getMonth() + 1 : '0' + (now.getMonth() + 1),
-    day: (now.getDate()-1) >= 10 ? now.getDate()-1 : '0' + (now.getDate()-1)
+    day: (now.getDate() - 1) >= 10 ? now.getDate() - 1 : '0' + (now.getDate() - 1)
   }
   return `${obj.year}-${obj.month}-${obj.day}`
 }
 
-Vue.use(BaiduMap,{
-  ak:'7I6eFbjHbRo9PTClcG7VDzamxC9ct4il'
+Vue.filter('nullHandle', function (val) {
+  val = val || '暂无信息';
+  return val;
+})
+
+Vue.use(BaiduMap, {
+  ak: '7I6eFbjHbRo9PTClcG7VDzamxC9ct4il'
 })
 
 Vue.config.productionTip = false
